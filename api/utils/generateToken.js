@@ -3,7 +3,7 @@ import CryptoJS from "crypto-js";
 
 
 const generateToken = (id) => {
-    const token = jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "1d"});
+    const token = jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "5s"});
     let encrypt_token = CryptoJS.AES.encrypt(token.toString(), process.env.CRYPTO_SECRET);
 
     return encrypt_token.toString();
