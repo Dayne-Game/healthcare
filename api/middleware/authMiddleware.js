@@ -1,20 +1,23 @@
 import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
-import decryptTokenID from "../utils/decryptTokenID.js";
+import decryptToken from "../utils/decryptToken.js";
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
     try {
-        token = req.headers.authorization.split(" ")[1];
+      // Grab token from auth header
+      token = req.headers.authorization.split(" ")[1];
+      // Feed the token into the decrypter
+      const decrypted_token = decryptToken(token);
+      // Verify the decrypted token
+      const decoded = jwt.verify(decrypted_token, process.env.JWT_SECRET);
+      // store user data into req.user
+      req.user = await User.findById(decoded.id).select("-password");
 
-        const decrypted_id = decryptTokenID(token);
-
-        req.user = await User.findById(decrypted_id).select("-password");
-
-        next();
+      next();
     } catch (error) {
       console.error(error);
       res.status(401);
