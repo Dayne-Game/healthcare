@@ -7,7 +7,7 @@ import Spinner from '../components/Spinner'
 
 function Login() {
 
-    const [formData, setFormData] = useState({ emails: '', password: '' });
+    const [formData, setFormData] = useState({ email: '', password: '' });
 
     const { email, password } = formData;
 
@@ -22,7 +22,7 @@ function Login() {
         }
 
         if (isSuccess || user) {
-            navigate('/')
+            navigate('/dashboard')
         }
 
         dispatch(reset);

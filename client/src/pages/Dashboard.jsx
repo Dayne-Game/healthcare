@@ -6,6 +6,8 @@ function Dashboard() {
     const navigate = useNavigate()
   
     const { user } = useSelector((state) => state.auth)
+
+    console.log(user)
   
     useEffect(() => {
       if (!user) {
@@ -15,9 +17,9 @@ function Dashboard() {
 
     return (
         <>
-            <section className="heading">
-                <h1>Welcome {user && user.userInfo.name}</h1>
-            </section>
+          <section className="heading">
+              <h1>Welcome {user && user.userInfo.name}</h1>
+          </section>
         </>
     )
 }

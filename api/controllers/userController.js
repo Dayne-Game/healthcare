@@ -13,7 +13,7 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     res.json({ 
         userInfo: {id: user.id, name: user.name, email: user.email},
-        token: generateToken(user._id, user.name, user.email) 
+        tokenInfo: generateToken(user._id, user.name, user.email) 
     });
   } else {
     res.status(400);
@@ -52,7 +52,7 @@ const register = asyncHandler(async (req, res) => {
     if (user) {
         res.status(201).json({ 
             userInfo: {id: user.id, name: user.name, email: user.email},
-            token: generateToken(user._id)
+            tokenInfo: generateToken(user._id)
         });
     } else {
         res.status(400);
